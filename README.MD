@@ -25,19 +25,19 @@ ParseService в конструкторе принимает ссылку на ap
 Для парсинга по запросам используется метод parseQuery(queryString);
 
 ```js
-    let parseBrief = new ParseService(
-                'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
-                BriefInventory
-            );
-    parseBrief.parseAll(); // Сохраняет в БД полный справочник
+let parseBrief = new ParseService(
+            'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
+            BriefInventory
+        );
+parseBrief.parseAll(); // Сохраняет в БД полный справочник
 ```
 
 ```js
-    let parseBrief = new ParseService(
-                'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
-                BriefInventory
-            );
-    parseBrief.parseQuery(?packing_id=95500); // Сохраняет в БД пункт с packing_id=95500
+let parseBrief = new ParseService(
+            'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
+            CompleteInventory
+        );
+parseBrief.parseQuery(?packing_id=124800); // Сохраняет в БД пункт с packing_id=124800
 ```
 
 Для запуска приложения:
