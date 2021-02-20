@@ -2,14 +2,16 @@
 
 Для установки требующихся зависимостей:
 ```js
-npm init
+-- npm init
 ```
 
 Для настройки парсера изменяем файл .env:
 ```js
 PORT - Порт открытия сервера
 
-DB_HOST - Хост базы данных (По умолчанию 127.0.0.1)
+DB_HOST - Хост базы данных
+(По умолчанию 127.0.0.1)
+
 DB_NAME - Имя базы данных
 DB_PORT - Порт базы данных
 DB_USER - Имя пользователя базы данных
@@ -18,8 +20,27 @@ DB_PASSWORD - Пароль пользователя базы данных
 LOGIN - Логин авторизации для api сервера
 PASSWORD - Пароль авторизации для api сервера
 ```
+ParseService в конструкторе принимает ссылку на api и ORM модель
+Для полного парсинга используется метод parseAll()
+Для парсинга по запросам используется метод parseQuery(queryString);
+
+```js
+    let parseBrief = new ParseService(
+                'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
+                BriefInventory
+            );
+    parseBrief.parseAll(); // Сохраняет в БД полный справочник
+```
+
+```js
+    let parseBrief = new ParseService(
+                'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
+                BriefInventory
+            );
+    parseBrief.parseQuery(?packing_id=95500); // Сохраняет в БД пункт с packing_id=95500
+```
 
 Для запуска приложения:
 ```js
-npm run start
+-- npm run start
 ```
