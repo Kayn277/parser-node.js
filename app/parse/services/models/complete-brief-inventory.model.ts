@@ -9,12 +9,14 @@ export class CompleteInventory extends Model<CompleteInventory> {
     @Column({type: DataType.INTEGER, primaryKey: true})
     packing_id: number;
 
+    //desc
     @Column({type: DataType.INTEGER, allowNull: true})
     desc_id: number;
-//
+    //prep
     @Column({type: DataType.INTEGER, allowNull: true})
     prep_id: number;
-
+    
+    //trade_name
     @Column({type: DataType.INTEGER})
     trade_name_id: number;
 
@@ -26,7 +28,7 @@ export class CompleteInventory extends Model<CompleteInventory> {
 
     @Column({type: DataType.INTEGER})
     lat_name_id: number;
-
+    //dosage_form
     @Column({type: DataType.INTEGER})
     dosage_form_id: number;
 
@@ -103,12 +105,14 @@ export class CompleteInventory extends Model<CompleteInventory> {
     @Column({type: DataType.TEXT})
     firms: string;
 
+    //as
     @Column({type: DataType.BIGINT})
     as_id: number;
 
     @Column({type: DataType.TEXT})
     as_name_rus: string;
 
+    //reg
     @Column({type: DataType.TEXT})
     reg_id: string;
 
@@ -121,6 +125,7 @@ export class CompleteInventory extends Model<CompleteInventory> {
     @Column({type: DataType.DATE})
     reg_cancel_date: Date;
 
+    //reg_status
     @Column({type: DataType.TEXT})
     reg_status_id: string;
 
@@ -130,6 +135,7 @@ export class CompleteInventory extends Model<CompleteInventory> {
     @Column({type: DataType.TEXT})
     registration: string;
 
+    //registrator
     @Column({type: DataType.INTEGER})
     registrator_id: number;
 
@@ -139,18 +145,20 @@ export class CompleteInventory extends Model<CompleteInventory> {
     @Column({type: DataType.TEXT})
     registrator_orig: string;
 
+    //registrator_country
     @Column({type: DataType.INTEGER})
     registrator_country_id: number;
 
     @Column({type: DataType.TEXT})
     registrator_country: string;
 
-
+    //ntfr
     @Column({type: DataType.TEXT})
     ntfr_id: string;
 
     @Column({type: DataType.TEXT})
     ntfr_name: string;
+    //ntfr
 
     @Column({type: DataType.TEXT})
     lifetime_text: string;
@@ -185,18 +193,22 @@ export class CompleteInventory extends Model<CompleteInventory> {
     @Column({type: DataType.TEXT})
     producer_country: string;
 
+    //???
     @Column({type: DataType.INTEGER, allowNull: true})
-    packer_id: number;
-
+    packer_id: number; 
+    
+    //???
     @Column({type: DataType.TEXT, allowNull: true})
-    packer_country_id : number;
+    packer_country_id : number; 
 
+    //???
     @Column({type: DataType.INTEGER, allowNull: true})
-    dfc_id: number;
+    dfc_id: number; 
 
+    //???
     @Column({type: DataType.INTEGER, allowNull: true})
-    completeness_id : number;
-
+    completeness_id : number; 
+    //lt
     @Column({type: DataType.INTEGER})
     lt_id : number;
 

@@ -5,8 +5,9 @@ dotenv.config({path: '.env-dev'}); // need .env file for working
 
 import express from 'express';
 import sequelize from './database/sequelize';
-import {ParseService} from '../app/parse/services/parsing.abstract.service'
+import {ParseService} from './parse/services/parsing.service'
 import { BriefInventory, CompleteInventory } from './parse/services/models';
+import { briefInventory } from './parse/services/models/models-array';
 
 
 const app = express();
@@ -30,6 +31,14 @@ app.listen(process.env.PORT || 3000, async () => {
             CompleteInventory
         );
         parseComplete.parseAll();
+
+
+        // //Когда надо запарсить не одну таблицу а например BriefInventory где данные из нескольких таблиц...
+        // let parseBigData = new ParseService(
+        //     'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
+        //     briefInventory // Сюда массив моделей
+        // );
+        // parseComplete.parseAll();//В каждую таблицу он загружает данные из большой
 
         console.log("Run on port: ", process.env.PORT || 3000)
     }

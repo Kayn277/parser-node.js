@@ -20,7 +20,24 @@ DB_PASSWORD - Пароль пользователя базы данных
 LOGIN - Логин авторизации для api сервера
 PASSWORD - Пароль авторизации для api сервера
 ```
-ParseService в конструкторе принимает ссылку на api и ORM модель
+ParseService в конструкторе принимает ссылку на api и sequelize модель
+
+Пример модели:
+```js
+import { Column, DataType, Table, Model } from "sequelize-typescript";
+
+@Table({
+    modelName: 'Frims_Model'
+})
+export class FirmsModel extends Model<FirmsModel> { 
+
+    @Column({type: DataType.INTEGER, primaryKey: true})
+    firms_id: number;
+
+    @Column({type: DataType.TEXT})
+    firms_name: string;
+}
+```
 Для полного парсинга используется метод parseAll()
 Для парсинга по запросам используется метод parseQuery(queryString);
 

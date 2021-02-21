@@ -11,7 +11,7 @@ export class BriefInventory extends Model<BriefInventory> {
 
     @Column({type: DataType.INTEGER, allowNull: true})
     desc_id: number;
-//
+    // Prep
     @Column({type: DataType.INTEGER, allowNull: true})
     prep_id: number;
     
@@ -20,7 +20,7 @@ export class BriefInventory extends Model<BriefInventory> {
 
     @Column({type: DataType.TEXT})
     prep_full: string;
-
+    //
     @Column({type: DataType.TEXT})
     amount: string;
 
@@ -32,34 +32,41 @@ export class BriefInventory extends Model<BriefInventory> {
 
     @Column({type: DataType.TEXT})
     barcode: number;
-
+    // Firms
     @Column({type: DataType.TEXT})
     firms_id: number;
 
     @Column({type: DataType.TEXT})
     firms: string;
+    // 
 
+    // as
     @Column({type: DataType.BIGINT})
     as_id: number;
 
     @Column({type: DataType.TEXT})
     as_name_rus: string;
+    //
 
+    // reg
     @Column({type: DataType.TEXT})
     reg_id: string;
+    //
 
+    // reg_status
     @Column({type: DataType.TEXT})
     reg_status_id: string;
-
+    // 
     @Column({type: DataType.TEXT})
     registration: string;
 
+    // ntfr
     @Column({type: DataType.TEXT})
     ntfr_id: string;
 
     @Column({type: DataType.TEXT})
     ntfr_name: string;
-
+    // 
     @Column({type: DataType.TEXT})
     lifetime_text: string;
 
@@ -78,9 +85,11 @@ export class BriefInventory extends Model<BriefInventory> {
     @Column({type: DataType.FLOAT})
     weight: number;
 
+    // dosage_form
     @Column({type: DataType.INTEGER})
     dosage_form_id: number;
 
     @Column({type: DataType.TEXT})
     dosage_form_full_name: string;
+    // 
 }
