@@ -48,7 +48,7 @@ export class PrepMarksModel extends Model<PrepMarksModel> {
     sad_seven: boolean;
 
     @Column({type: DataType.INTEGER})
-    druggroup_id: number; //????
+    druggroup_id: number; //?????
 
     @Column({type: DataType.DATE})
     actdate: Date;
