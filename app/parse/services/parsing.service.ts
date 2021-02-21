@@ -2,11 +2,9 @@ import bent from 'bent';
 import base64 from 'base-64';
 import fs from 'fs';
 import admZip from 'adm-zip';
-import { BriefInventory } from './models';
-import ModelStatic from './model.type';
 import { Repository } from 'sequelize-typescript';
 import { Model, ModelCtor } from 'sequelize/types';
-import bind from 'bind-decorator';
+
 
 export class ParseService <T extends Model<T>>{
     /**
@@ -17,8 +15,10 @@ export class ParseService <T extends Model<T>>{
     constructor(public url: string, public model: Repository<T>){
     }
 
-    @bind
-    public async parseAll():Promise<void>{
+    /**
+     * Парсинг сжатых данных
+     */
+    public async parseAll():Promise<void>{ 
         const getData = bent('GET', 200, 'buffer',
         {
             authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
@@ -36,6 +36,9 @@ export class ParseService <T extends Model<T>>{
         });
     }
 
+    /**
+     * Парсинг по запросам
+     */
     public async parseQuery(query: string):Promise<void> {
         const getData = bent('GET', 200, 'json',
         {

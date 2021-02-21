@@ -50,11 +50,11 @@ parseBrief.parseAll(); // Сохраняет в БД полный справоч
 ```
 
 ```js
-let parseBrief = new ParseService(
+let parseComplete = new ParseService(
             'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
             CompleteInventory
         );
-parseBrief.parseQuery(?packing_id=124800); // Сохраняет в БД пункт с packing_id=124800
+parseComplete.parseQuery(?packing_id=124800); // Сохраняет в БД пункт с packing_id=124800
 ```
 
 Для запуска приложения:
