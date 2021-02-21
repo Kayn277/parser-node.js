@@ -38,7 +38,8 @@ export class FirmsModel extends Model<FirmsModel> {
     firms_name: string;
 }
 ```
-Для полного парсинга используется метод parseAll()
+Для полного парсинга используется метод parseAll();
+Для полного парсинга сжатых данных используется метод parseAllZip();
 Для парсинга по запросам используется метод parseQuery(queryString);
 
 ```js
@@ -47,6 +48,14 @@ let parseBrief = new ParseService(
             BriefInventory
         );
 parseBrief.parseAll(); // Сохраняет в БД полный справочник
+```
+
+```js
+let parseBrief = new ParseService(
+            'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
+            BriefInventory
+        );
+parseBrief.parseAllZip(); // Сохраняет в БД полный справочник еслли он сжатый
 ```
 
 ```js

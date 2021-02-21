@@ -24,13 +24,13 @@ app.listen(process.env.PORT || 3000, async () => {
              'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
              BriefInventory
         );
-        parseBrief.parseAll();
+        parseBrief.parseAllZip();
 
         let parseComplete = new ParseService(
             'http://rlsaurora10.azurewebsites.net/api/inventory_complete', 
             CompleteInventory
         );
-        parseComplete.parseAll();
+        parseComplete.parseAllZip();
 
 
         // //Когда надо запарсить не одну таблицу а например BriefInventory где данные из нескольких таблиц...

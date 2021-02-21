@@ -8,7 +8,6 @@ import { Model, ModelCtor } from 'sequelize/types';
 
 export class ParseService <T extends Model<T>>{
     /**
-    * 
     * @param url - Ссылка api
     * @param model - Модель для работы с базой данных
     */
@@ -18,7 +17,7 @@ export class ParseService <T extends Model<T>>{
     /**
      * Парсинг сжатых данных
      */
-    public async parseAll():Promise<void>{ 
+    public async parseAllZip():Promise<void>{ 
         const getData = bent('GET', 200, 'buffer',
         {
             authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
@@ -27,13 +26,21 @@ export class ParseService <T extends Model<T>>{
         
         let zip = new admZip(decodeData as Buffer);
         let zipEntries = zip.getEntries();
-        let data: Array<T> = new Array<T>();
         for (var i = 0; i < zipEntries.length; i++) {
             this.model.bulkCreate(JSON.parse(zip.readAsText(zipEntries[i])));
         }
-        fs.writeFile('text.txt', JSON.parse(JSON.stringify(data.toString())), (err) => {
-            console.log(err);
+    }
+
+    /**
+     * Парсинг данных
+     */
+    public async parseAll():Promise<void>{ 
+        const getData = bent('GET', 200, 'json',
+        {
+            authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
         });
+        let decodeData = await getData(this.url)
+        this.model.bulkCreate(JSON.parse(JSON.stringify(decodeData)));
     }
 
     /**
