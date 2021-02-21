@@ -5,9 +5,9 @@ dotenv.config({path: '.env-dev'}); // need .env file for working
 
 import express from 'express';
 import sequelize from './database/sequelize';
-import {ParseService} from './parse/services/parsing.service'
-import { BriefInventory, CompleteInventory } from './parse/services/models';
-import { briefInventory } from './parse/services/models/models-array';
+import {ParseService} from './services/parsing.service'
+import { BriefInventory, CompleteInventory } from './services/models';
+import { briefInventory } from './services/models/models-array';
 
 
 const app = express();

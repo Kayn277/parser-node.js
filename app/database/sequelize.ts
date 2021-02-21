@@ -1,4 +1,4 @@
-import { BriefInventory, CompleteInventory } from "../parse/services/models/";
+import { BriefInventory, CompleteInventory } from "../services/models";
 import { Sequelize } from "sequelize-typescript"
 
 
