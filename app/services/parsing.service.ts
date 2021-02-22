@@ -25,15 +25,12 @@ export class ParseService <T extends Model>{
                 authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
             });
             let decodeData = await getData(url)
-            console.log("WorkOut")
             let zip = new admZip(decodeData as Buffer);
             let zipEntries = zip.getEntries();
             for (var i = 0; i < zipEntries.length; i++) {
                 let decodeData = zip.readAsText(zipEntries[i]);
                 let repositoryModel = sequelize.getRepository(model);
                 let dupKey = repositoryModel.primaryKeyAttribute;
-                console.log(dupKey)
-                console.log(repositoryModel);
                 repositoryModel.bulkCreate(JSON.parse(decodeData), {updateOnDuplicate: [dupKey]}).catch(err => {console.log(err)});
             }
         }
