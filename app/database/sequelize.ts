@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript"
-import { AllModels } from "../services/models-array";
+import { AllModels } from "../parse/models-array";
 
 
 

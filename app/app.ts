@@ -1,13 +1,12 @@
 const bodyParser = require('body-parser');
-require('body-parser-xml')(bodyParser);
 import dotenv from 'dotenv';
 dotenv.config({path: '.env-dev'}); // need .env file for working
 
 import express from 'express';
 import sequelize from './database/sequelize';
-import {ParseService} from './services/parsing.service'
-import { BriefInventory, CompleteInventory, PrepMarksModel } from './services/models';
-import { briefInventory } from './services/models-array';
+import {ParseService} from './parse/parse.service'
+import { PrepMarksModel } from './parse/models';
+import { briefInventory } from './parse/models-array';
 
 
 const app = express();
@@ -21,10 +20,14 @@ app.listen(process.env.PORT || 3000, async () => {
         await sequelize.sync({force: true});
 
         let parseBrief = new ParseService();
-        
+
         //Парсит inventory_brief
-        briefInventory.forEach(async model => await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/inventory_brief', model));
-        
+        const promises = briefInventory.map(model => {
+            return parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/inventory_brief', model);
+        });
+        Promise.all(promises);
+
+
         //Парсит classes_prep_marks
         await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/classes_prep_marks', PrepMarksModel);
 
