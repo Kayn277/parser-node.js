@@ -17,7 +17,7 @@ export class ParseService <T extends Model>{
      * @param url - Ссылка api
      * @param model - Модель для работы с базой данных
      */
-    public async parseAllZip(url: string, model: (new () => T)):Promise<T[]>{ 
+    public async parseAllZip(url: string, model: (new () => T)):Promise<void | T[]>{ 
         try
         {
             const getData = bent('GET', 200, 'buffer',
@@ -45,7 +45,7 @@ export class ParseService <T extends Model>{
      * @param url - Ссылка api
      * @param model - Модель для работы с базой данных
      */
-    public async parseAll(url: string, model: (new () => T)):Promise<T[]>{
+    public async parseAll(url: string, model: (new () => T)):Promise<void | T[]>{
         try
         {
             const getData = bent('GET', 200, 'json',
@@ -86,12 +86,11 @@ export class ParseService <T extends Model>{
             console.log(JSON.parse(JSON.stringify([decodeData])));
             let repositoryModel = sequelize.getRepository(model);
             let dupKey = repositoryModel.primaryKeyAttribute;
-            return await repositoryModel.bulkCreate(JSON.parse(JSON.stringify([decodeData])), {updateOnDuplicate: [dupKey]}).catch(err => console.log(err));
+            return await repositoryModel.bulkCreate(JSON.parse(JSON.stringify([decodeData])), {updateOnDuplicate: [dupKey]}).catch(err => {throw new Error(err)});
          
         }
         catch (err) 
         {
-            console.log(err);
             throw new Error(err);
         }
     }
