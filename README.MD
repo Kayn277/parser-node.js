@@ -19,7 +19,7 @@ DB_PASSWORD - Пароль пользователя базы данных
 LOGIN - Логин авторизации для api сервера
 PASSWORD - Пароль авторизации для api сервера
 ```
-ParseService в конструкторе принимает ссылку на api и sequelize модель
+ParseService 
 
 Пример модели:
 ```js
@@ -37,35 +37,46 @@ export class FirmsModel extends Model<FirmsModel> {
     firms_name: string;
 }
 ```
-Для полного парсинга используется метод parseAll();
-Для полного парсинга сжатых данных используется метод parseAllZip();
-Для парсинга по запросам используется метод parseQuery(queryString);
+Для полного парсинга используется метод parseAll(url, model);
+Для полного парсинга сжатых данных используется метод parseAllZip(url, model);
+Для парсинга по запросам используется метод parseQuery(url, query, model);
 
 ```js
-let parseBrief = new ParseService();
 
-export const briefInventory = [
-    BriefInventory, 
-    PrepMarksModel, 
-    AsModel, 
-    RegModel,
-    FirmsModel,
-    RegStatusModel,
-    NtfrModel,
-    RegModel,
-    DosageFormModel
-]; // model-array.ts
 
-//Парсит массив моделей из данных inventory_brief
-briefInventory.forEach(async model => await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/inventory_brief', model));
-        
-//Парсит classes_prep_marks
-await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/classes_prep_marks', PrepMarksModel);
+    public async parseAll(req: Request, res: Response) {
+        try {
+            const data = await this.parseService.parseAll('http://rlsaurora10.azurewebsites.net/api/inventory_brief', BriefInventory)
+            res.status(200).send(data);
+        } 
+        catch (err) {
+            res.status(501).send(err);
+        }
+    }
 
-let parseComplete = new ParseService();
-parseComplete.parseQuery(
-    'http://rlsaurora10.azurewebsites.net/api/inventory_complete', '?packing_id=124800', 
-    CompleteInventory); // Сохраняет в БД пункт с packing_id=124800
+
+    public async parseAllZip(req: Request, res: Response) {
+        try {
+            const data = await this.parseService.parseAllZip('http://rlsaurora10.azurewebsites.net/api/inventory_brief', BriefInventory)
+            res.status(200).send(data);
+        } 
+        catch (err) {
+            res.status(501).send(err);
+        }
+    }
+
+
+    public async parseQuery(req: Request, res: Response) {
+        try {
+            const {query} = req.params;
+            console.log(query);
+            const data = await this.parseService.parseQuery('http://rlsaurora10.azurewebsites.net/api/inventory_brief', query, BriefInventory);
+            res.status(200).send(data);
+        } 
+        catch (err) {
+            res.status(501).send(err);
+        }
+    }
 
 ```
 
