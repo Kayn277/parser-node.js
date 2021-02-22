@@ -1,4 +1,4 @@
-import { ParseService } from 'app/parse/parse.service';
+import { ParseService } from '../parse.service';
 import bind from 'bind-decorator';
 import { Request, Response } from 'express';
 import { BriefInventory } from "./models/brief-inventory.model";
