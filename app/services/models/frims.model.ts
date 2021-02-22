@@ -2,13 +2,14 @@ import { Column, DataType, Table, Model } from "sequelize-typescript";
 
 
 @Table({
-    modelName: 'Frims_Model'
+    modelName: 'Firms_Model',
+    omitNull: true
 })
 
 export class FirmsModel extends Model<FirmsModel> {
 
-    @Column({type: DataType.INTEGER, primaryKey: true})
-    firms_id: number;
+    @Column({type: DataType.TEXT})
+    firms_id: String;
 
     @Column({type: DataType.TEXT})
     firms: string;

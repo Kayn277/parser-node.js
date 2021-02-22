@@ -1,5 +1,4 @@
 
-
 Для установки требующихся зависимостей:
 ```js
 -- npm init
@@ -55,15 +54,15 @@ let parseBrief = new ParseService(
             'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
             BriefInventory
         );
-parseBrief.parseAllZip(); // Сохраняет в БД полный справочник еслли он сжатый
+parseBrief.parseAllZip(); // Сохраняет в БД полный сжатый справочник
 ```
 
 ```js
 let parseComplete = new ParseService(
-            'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
+            'http://rlsaurora10.azurewebsites.net/api/inventory_complete', 
             CompleteInventory
         );
-parseComplete.parseQuery(?packing_id=124800); // Сохраняет в БД пункт с packing_id=124800
+parseComplete.parseQuery('?packing_id=124800'); // Сохраняет в БД пункт с packing_id=124800
 ```
 
 Для запуска приложения:

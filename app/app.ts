@@ -6,8 +6,8 @@ dotenv.config({path: '.env-dev'}); // need .env file for working
 import express from 'express';
 import sequelize from './database/sequelize';
 import {ParseService} from './services/parsing.service'
-import { BriefInventory, CompleteInventory } from './services/models';
-import { briefInventory } from './services/models/models-array';
+import { BriefInventory, CompleteInventory, PrepMarksModel } from './services/models';
+import { briefInventory } from './services/models-array';
 
 
 const app = express();
@@ -20,25 +20,15 @@ app.listen(process.env.PORT || 3000, async () => {
     try {
         await sequelize.sync({force: true});
 
-        let parseBrief = new ParseService(
-             'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
-             BriefInventory
-        );
-        parseBrief.parseAllZip();
-
-        let parseComplete = new ParseService(
-            'http://rlsaurora10.azurewebsites.net/api/inventory_complete', 
-            CompleteInventory
-        );
-        parseComplete.parseAllZip();
+        let parseBrief = new ParseService();
+        
+        //Парсит inventory_brief
+        briefInventory.forEach(async model => await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/inventory_brief', model));
+        
+        //Парсит classes_prep_marks
+        await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/classes_prep_marks', PrepMarksModel);
 
 
-        // //Когда надо запарсить не одну таблицу а например BriefInventory где данные из нескольких таблиц...
-        // let parseBigData = new ParseService(
-        //     'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
-        //     briefInventory // Сюда массив моделей
-        // );
-        // parseComplete.parseAll();//В каждую таблицу он загружает данные из большой
 
         console.log("Run on port: ", process.env.PORT || 3000)
     }

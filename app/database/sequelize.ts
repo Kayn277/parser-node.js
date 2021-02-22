@@ -1,5 +1,5 @@
-import { BriefInventory, CompleteInventory } from "../services/models";
 import { Sequelize } from "sequelize-typescript"
+import { AllModels } from "../services/models-array";
 
 
 
@@ -15,10 +15,9 @@ const sequelize = new Sequelize(
             timestamps: false
         },
         models: [__dirname + '../parse/services/models'],
-        logging: false,
-        
+        logging: false
     });
 
-sequelize.addModels([BriefInventory, CompleteInventory]) // Добавление моделей для их создания;
+sequelize.addModels(AllModels) // Добавление моделей для их создания;
 
 export default sequelize;

@@ -1,58 +1,97 @@
 import bent from 'bent';
 import base64 from 'base-64';
-import fs from 'fs';
 import admZip from 'adm-zip';
-import { Repository } from 'sequelize-typescript';
-import { Model, ModelCtor } from 'sequelize/types';
+import { Repository, Model } from 'sequelize-typescript';
+//import { Model} from 'sequelize/types';
+import { Console } from 'console';
+import sequelize from '../database/sequelize';
 
 
-export class ParseService <T extends Model<T>>{
-    /**
-    * @param url - Ссылка api
-    * @param model - Модель для работы с базой данных
-    */
-    constructor(public url: string, public model: Repository<T>){
+export class ParseService <T extends Model>{
+
+    constructor(){
     }
 
     /**
      * Парсинг сжатых данных
+     * @param url - Ссылка api
+     * @param model - Модель для работы с базой данных
      */
-    public async parseAllZip():Promise<void>{ 
-        const getData = bent('GET', 200, 'buffer',
+    public async parseAllZip(url: string, model: (new () => T)):Promise<void>{ 
+        try
         {
-            authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
-        });
-        let decodeData = await getData(this.url)
-        
-        let zip = new admZip(decodeData as Buffer);
-        let zipEntries = zip.getEntries();
-        for (var i = 0; i < zipEntries.length; i++) {
-            this.model.bulkCreate(JSON.parse(zip.readAsText(zipEntries[i])));
+            const getData = bent('GET', 200, 'buffer',
+            {
+                authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
+            });
+            let decodeData = await getData(url)
+            console.log("WorkOut")
+            let zip = new admZip(decodeData as Buffer);
+            let zipEntries = zip.getEntries();
+            for (var i = 0; i < zipEntries.length; i++) {
+                let decodeData = zip.readAsText(zipEntries[i]);
+                let repositoryModel = sequelize.getRepository(model);
+                let dupKey = repositoryModel.primaryKeyAttribute;
+                console.log(dupKey)
+                console.log(repositoryModel);
+                repositoryModel.bulkCreate(JSON.parse(decodeData), {updateOnDuplicate: [dupKey]}).catch(err => {console.log(err)});
+            }
+        }
+        catch (err) 
+        {
+            console.log(err);
         }
     }
 
     /**
      * Парсинг данных
+     * @param url - Ссылка api
+     * @param model - Модель для работы с базой данных
      */
-    public async parseAll():Promise<void>{ 
-        const getData = bent('GET', 200, 'json',
+    public async parseAll(url: string, model: (new () => T)):Promise<void>{
+        try
         {
-            authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
-        });
-        let decodeData = await getData(this.url)
-        this.model.bulkCreate(JSON.parse(JSON.stringify(decodeData)));
+            const getData = bent('GET', 200, 'json',
+            {
+                authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
+            });
+
+            let decodeData = await getData(url)
+            let repositoryModel = sequelize.getRepository(model);
+            let dupKey = repositoryModel.primaryKeyAttribute;
+            repositoryModel.bulkCreate(JSON.parse(JSON.stringify(decodeData)), {updateOnDuplicate: [dupKey]}).catch(err => console.log(err));
+
+        }
+        catch (err) 
+        {
+            console.log(err);
+        }
+        
     }
 
     /**
      * Парсинг по запросам
+     * @param url - Ссылка api
+     * @param query - Запрос прим. - ?packing_id=124800
+     * @param model - Модель для работы с базой данных
      */
-    public async parseQuery(query: string):Promise<void> {
-        const getData = bent('GET', 200, 'json',
+    public async parseQuery(url: string, query: string, model: (new () => T)):Promise<void> {
+        try
         {
-            authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
-        });
-        let decodeData = await getData(this.url + query)
-        this.model.create(JSON.parse(JSON.stringify(decodeData)));
+            const getData = bent('GET', 200, 'json',
+            {
+                authorization: 'Basic ' + base64.encode(String(process.env.LOGIN) + ":" + String(process.env.PASSWORD)),
+            });
+            let decodeData = await getData(url + query)
+            let repositoryModel = sequelize.getRepository(model);
+            let dupKey = repositoryModel.primaryKeyAttribute;
+            repositoryModel.bulkCreate(JSON.parse(JSON.stringify(decodeData)), {updateOnDuplicate: [dupKey]}).catch(err => console.log(err));
+
+        }
+        catch (err) 
+        {
+            console.log(err);
+        }
     }
  
   } 

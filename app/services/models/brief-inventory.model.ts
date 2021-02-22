@@ -2,7 +2,8 @@ import { Column, DataType, Table, Model } from "sequelize-typescript";
 
 
 @Table({
-    modelName: 'Brief_Inventory'
+    modelName: 'Brief_Inventory',
+    omitNull: true
 })
 export class BriefInventory extends Model<BriefInventory> {
 
@@ -54,15 +55,15 @@ export class BriefInventory extends Model<BriefInventory> {
     //
 
     // reg_status
-    @Column({type: DataType.TEXT})
-    reg_status_id: string;
+    @Column({type: DataType.INTEGER})
+    reg_status_id: number;
     // 
     @Column({type: DataType.TEXT})
     registration: string;
 
     // ntfr
-    @Column({type: DataType.TEXT})
-    ntfr_id: string;
+    @Column({type: DataType.INTEGER})
+    ntfr_id: number;
 
     @Column({type: DataType.TEXT})
     ntfr_name: string;
