@@ -42,27 +42,31 @@ export class FirmsModel extends Model<FirmsModel> {
 Для парсинга по запросам используется метод parseQuery(queryString);
 
 ```js
-let parseBrief = new ParseService(
-            'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
-            BriefInventory
-        );
-parseBrief.parseAll(); // Сохраняет в БД полный справочник
-```
+let parseBrief = new ParseService();
 
-```js
-let parseBrief = new ParseService(
-            'http://rlsaurora10.azurewebsites.net/api/inventory_brief', 
-            BriefInventory
-        );
-parseBrief.parseAllZip(); // Сохраняет в БД полный сжатый справочник
-```
+export const briefInventory = [
+    BriefInventory, 
+    PrepMarksModel, 
+    AsModel, 
+    RegModel,
+    FirmsModel,
+    RegStatusModel,
+    NtfrModel,
+    RegModel,
+    DosageFormModel
+]; // model-array.ts
 
-```js
-let parseComplete = new ParseService(
-            'http://rlsaurora10.azurewebsites.net/api/inventory_complete', 
-            CompleteInventory
-        );
-parseComplete.parseQuery('?packing_id=124800'); // Сохраняет в БД пункт с packing_id=124800
+//Парсит массив моделей из данных inventory_brief
+briefInventory.forEach(async model => await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/inventory_brief', model));
+        
+//Парсит classes_prep_marks
+await parseBrief.parseAllZip('http://rlsaurora10.azurewebsites.net/api/classes_prep_marks', PrepMarksModel);
+
+let parseComplete = new ParseService();
+parseComplete.parseQuery(
+    'http://rlsaurora10.azurewebsites.net/api/inventory_complete', '?packing_id=124800', 
+    CompleteInventory); // Сохраняет в БД пункт с packing_id=124800
+
 ```
 
 Для запуска приложения:
