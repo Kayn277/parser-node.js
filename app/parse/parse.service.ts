@@ -7,7 +7,7 @@ import { Console } from 'console';
 import sequelize from '../database/sequelize';
 
 
-export class ParseService <T extends Model>{
+export class ParseService{
 
     constructor(){
     }
@@ -17,7 +17,7 @@ export class ParseService <T extends Model>{
      * @param url - Ссылка api
      * @param model - Модель для работы с базой данных
      */
-    public async parseAllZip(url: string, model: (new () => T)):Promise<void>{ 
+    public async parseAllZip(url: string, model: (new () => Model)):Promise<void>{ 
         try
         {
             const getData = bent('GET', 200, 'buffer',
@@ -45,7 +45,7 @@ export class ParseService <T extends Model>{
      * @param url - Ссылка api
      * @param model - Модель для работы с базой данных
      */
-    public async parseAll(url: string, model: (new () => T)):Promise<void>{
+    public async parseAll(url: string, model: (new () => Model)):Promise<void>{
         try
         {
             const getData = bent('GET', 200, 'json',
@@ -72,7 +72,7 @@ export class ParseService <T extends Model>{
      * @param query - Запрос прим. - ?packing_id=124800
      * @param model - Модель для работы с базой данных
      */
-    public async parseQuery(url: string, query: string, model: (new () => T)):Promise<void> {
+    public async parseQuery(url: string, query: string, model: (new () => Model)):Promise<void> {
         try
         {
             const getData = bent('GET', 200, 'json',

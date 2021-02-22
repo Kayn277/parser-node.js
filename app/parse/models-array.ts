@@ -1,5 +1,5 @@
 import { AsModel } from "./models/as.model";
-import { BriefInventory } from "./models/brief-inventory.model";
+import { BriefInventory } from "./brief_inventory/models/brief-inventory.model";
 import { CompleteInventory } from "./models/complete-brief-inventory.model";
 import { DosageFormModel } from "./models/dosage-form.model";
 import { FirmsModel } from "./models/frims.model";
