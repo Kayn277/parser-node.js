@@ -84,3 +84,12 @@ public async parseQuery(req: Request, res: Response) {
 ```js
 -- npm run start
 ```
+
+Запросы:
+```js
+POST /brief_inventory/packing_id=95600 // Парсит brief inventory с packing_id=95600
+
+POST /complete_inventory/allzip // Парсит сжатый complete inventory
+
+POST /complete_inventory/all // Парсит не сжатый complete inventory
+```
