@@ -4,7 +4,7 @@ import { CompleteInventory } from "../parse/complete_inventory/models/complete-b
 import { DosageFormModel } from "../parse/models/dosage-form.model";
 import { FirmsModel } from "../parse/models/frims.model";
 import { NtfrModel } from "../parse/models/ntfr.model";
-import { PrepMarksModel } from "../parse/models/prep-marks.model";
+import { PrepMarksModel } from "../parse/prep_makrs/models/prep-marks.model";
 import { RegStatusModel } from "../parse/models/reg-status.model";
 import { RegModel } from "../parse/models/reg.model";
 

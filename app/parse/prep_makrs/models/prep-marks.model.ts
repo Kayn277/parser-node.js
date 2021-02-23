@@ -8,7 +8,7 @@ import { Column, DataType, Table, Model } from "sequelize-typescript";
 
 export class PrepMarksModel extends Model<PrepMarksModel> {
     
-    @Column({type: DataType.INTEGER})
+    @Column({type: DataType.INTEGER, primaryKey: true})
     prep_id: number;
 
     @Column({type: DataType.BOOLEAN})
