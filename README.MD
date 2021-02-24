@@ -42,8 +42,6 @@ export class FirmsModel extends Model<FirmsModel> {
 Для парсинга по запросам используется метод parseQuery(url, query, model);
 
 ```js
-
-
 public async parseAll(req: Request, res: Response) {
     try {
         const data = await this.parseService.parseAll('http://rlsaurora10.azurewebsites.net/api/inventory_brief', BriefInventory)
@@ -77,7 +75,6 @@ public async parseQuery(req: Request, res: Response) {
         res.status(501).send(err);
     }
 }
-
 ```
 
 Для запуска приложения:
@@ -92,4 +89,16 @@ POST /brief_inventory/packing_id=95600 // Парсит brief inventory с packin
 POST /complete_inventory/allzip // Парсит сжатый complete inventory
 
 POST /complete_inventory/all // Парсит не сжатый complete inventory
+```
+
+
+Доступные запросы:
+```js
+brief_inventory 
+
+complete_inventory
+
+prep_marks
+
+prep
 ```

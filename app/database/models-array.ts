@@ -7,6 +7,7 @@ import { NtfrModel } from "../parse/models/ntfr.model";
 import { PrepMarksModel } from "../parse/prep_makrs/models/prep-marks.model";
 import { RegStatusModel } from "../parse/models/reg-status.model";
 import { RegModel } from "../parse/models/reg.model";
+import { PrepModel } from "../parse/prep/models/prep.model";
 
 //???
 export const AllModels = [
@@ -19,5 +20,6 @@ export const AllModels = [
     RegStatusModel,
     NtfrModel,
     RegModel,
-    DosageFormModel
+    DosageFormModel,
+    PrepModel
 ]; // Все модели

@@ -17,7 +17,7 @@ export class ParseService <T extends Model>{
      * @param url - Ссылка api
      * @param model - Модель для работы с базой данных
      */
-    public async parseAllZip(url: string, model: (new () => T)):Promise<void | T[]>{ 
+    public async parseAllZip(url: string, model: (new () => T)):Promise<T[]>{ 
         try
         {
             const getData = bent('GET', 200, 'buffer',
@@ -36,7 +36,7 @@ export class ParseService <T extends Model>{
         }
         catch (err) 
         {
-            console.log(err);
+            throw new Error(err);
         }
     }
 
@@ -45,7 +45,7 @@ export class ParseService <T extends Model>{
      * @param url - Ссылка api
      * @param model - Модель для работы с базой данных
      */
-    public async parseAll(url: string, model: (new () => T)):Promise<void | T[]>{
+    public async parseAll(url: string, model: (new () => T)):Promise<T[]>{
         try
         {
             const getData = bent('GET', 200, 'json',
@@ -61,7 +61,7 @@ export class ParseService <T extends Model>{
         }
         catch (err) 
         {
-            console.log(err);
+            throw new Error(err);
         }
         
     }
@@ -72,7 +72,7 @@ export class ParseService <T extends Model>{
      * @param query - Запрос прим. - packing_id=124800
      * @param model - Модель для работы с базой данных
      */
-    public async parseQuery(url: string, query: string, model: (new () => T)):Promise<void | T[]> {
+    public async parseQuery(url: string, query: string, model: (new () => T)):Promise<T[]> {
         try
         {
             console.log('Go work with ', query);
